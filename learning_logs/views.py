@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect # 1
+from django.shortcuts import render, redirect, get_object_or_404 # 1
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Topic, Entry # 3
@@ -22,7 +22,7 @@ def topics(request): # 4
 @login_required
 def topic(request, topic_id): # 8a
 	"""Shows a single topic and all its entries."""
-	topic = Topic.objects.get(id=topic_id) # b
+	topic = get_object_or_404(Topic, id=topic_id) # b
 
 	# Make sure the topic belows to the current user
 	check_topic_owner(topic.owner, request.user)
@@ -135,7 +135,8 @@ def check_topic_owner(owner, request):
 ## 8. This is the first view function that requires a parameter other than the
 # request object. The function accepts the value captured by the expression
 # (id)and stores it in topic_id [a]. At [b] we use get() to retrieve the
-# topic, just as we did in the Django shell. At [c] we get the entries associated
+# topic, just as we did in the Django shell. [UPDATE] this was changed per p.460
+# At [c] we get the entries associated
 # with this topic, and we order them according to date_added. The minus sign
 # in front of date_added sorts the results in reverse order, which will display the
 # most recent entries first. We store the topic and entries in the context dic-
