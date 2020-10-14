@@ -1,0 +1,53 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <div class="jumbotron">
+        <h1 class="display-3">Track your learning.</h1>
+
+        <p class="lead">Make your own Learning Log, and keep a list of the
+            topics you're learning about. Whenever you learn something new
+            about a topic, make an entry summarizing what you've learned.</p>
+        {% if user.is_authenticated %}
+        <a class="btn btn-lg btn-primary" href="{% url 'learning_logs:topics'%}"
+        role="button">My Topics &raquo;</a>
+        {% else %}
+        <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+        role="button">Register &raquo;</a>
+        {% endif %}
+    </div>
+{% endblock page_header %}
+
+{% comment %}
+erased the following during stylization process:
+
+{% block content %}
+<p>Learning log helps you keep track of your learning for any topic you're learning about.</p>
+{% endblock content %}
+
+
+## Line 1: We've replaced the <p>Learning Log</p> title with the code for inheriting
+## from a parent template.
+## A child template MUST have an {% extends %} tag on the first line to tell
+## Django which parent template to inherit from. The file base.html
+## is part of learning_logs, so we include learning_logs in the path to the par-
+## ent template. This line pulls in everything contained in the base.html tem-
+## plate and allows index.html to define what goes in the space reserved by the
+## content block.
+
+## Line 3: We define the content block by inserting a {% block %} tag with
+## the name content. Everything that we aren’t inheriting from the parent tem-
+## plate goes inside the content block.
+
+## Line 5. We indicate that we’re finished defining the content by using an
+## {% endblock content %} tag. The {% endblock %} tag doesn’t require a name,
+## but if a template grows to contain multiple blocks, it can be helpful to
+## know exactly which block is ending.
+
+NOTE: In a large project, it’s common to have one parent template called base.html for
+the entire site and parent templates for each major section of the site. All the section
+templates inherit from base.html, and each page in the site inherits from a section
+template. This way you can easily modify the look and feel of the site as a whole, any
+section in the site, or any individual page. This configuration provides a very effi-
+cient way to work, and it encourages you to steadily update your site over time.
+{% endcomment %}

@@ -1,0 +1,92 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h1>{{ topic }}</h1>
+{% endblock page_header %}
+
+{% block content %}
+    <h3>
+        <a class="btn btn-lg btn-primary"
+           href="{% url 'learning_logs:new_entry' topic.id %}" role="button">
+            New Entry</a>
+    </h3>
+
+    {% for entry in entries %}
+        <div class="card mb-3">
+            <h4 class="card-header">
+                {{ entry.date_added|date:'M d, Y H:i' }}
+                <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">
+                    edit</a></small>
+            </h4>
+            <div class="card-body">
+                {{ entry.text|linebreaks }}
+            </div>
+        </div>
+    {% empty %}
+        <p>There are no entries for this topic yet.</p>
+    {% endfor %}
+{% endblock content %}
+
+{% comment %}
+We first place the topic in the page_header block [3]. Then we delete the
+unordered list structure previously used in this template. Instead of making
+each entry a list item, we create a div element with the selector card at [15].
+This card has two nested elements: one to hold the timestamp and the link
+to edit the entry, and another to hold the body of the entry.
+
+The first element in the card is a header, which is an <h4> element with
+the selector card-header [15]. This card header contains the date the entry was
+made and a link to edit the entry. The <small> tag around the edit_entry link
+makes it appear a little smaller than the timestamp [17]. The second element
+is a div with the selector card-body [20], which places the text of the entry in
+a simple box on the card. Notice that the Django code for including the
+information on the page hasn’t changed; only the elements that affect the
+appearance of the page have changed.
+
+
+The below markup was replaced upon bootstrap styling:
+    <p>Topic: {{ topic }}</p>
+    <p>Entries:</p>
+
+    <p>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">Add a New Entry</a>
+    </p>
+
+    <ul>
+        {% for entry in entries %}
+            <li>
+                <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+                <p>{{ entry.text|linebreaks }}</p>
+                <p>
+                    <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit Entry</a>
+                </p>
+            </li>
+        {% empty %}
+            <li>There are no entries for this topic yet.</li>
+        {% endfor %}
+    </ul>
+We extend base.html, as we do for all pages in the project.
+
+Next, we show
+the topic that’s currently being displayed [Line 4], which is stored in the template
+variable {{ topic }}. The variable topic is available because it’s included
+in the context dictionary [views.py]. We then start a bulleted list to show each of the
+entries [Line 11] and loop through them as we did the topics earlier [Line 12].
+Each bullet lists two pieces of information: the timestamp and the
+full text of each entry. For the timestamp [Line 15], we display the value of the
+attribute date_added. In Django templates, a vertical line ( | ) represents a
+template filter—-a function that modifies the value in a template variable.
+The filter date:'M d, Y H:i' displays timestamps in the format January 1,
+2018 23:00. The next line displays the full value of text rather than just the
+first 50 characters from entry. The filter linebreaks [Line 15] ensures that long text
+entries include line breaks in a format understood by browsers rather than
+showing a block of uninterrupted text. At [Line 20] we use the {% empty %} template
+tag to print a message informing the user that no entries have been made.
+
+[Line 17] We include the edit link after each entry’s date and text has been dis-
+played. We use the {% url %} template tag to determine the URL for the
+named URL pattern edit_entry , along with the ID attribute of the current
+entry in the loop ( entry.id ). The link text Edit entry appears after each entry
+on the page.
+{% endcomment %}

@@ -1,0 +1,68 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h2>Log In</h2>
+{% endblock page_header %}
+
+{% block content %}
+    <form method="post" action="{% url 'users:login' %}" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">Log in</button>
+        {% endbuttons %}
+
+        <input type="hidden" name="next"
+            value="{% url 'learning_logs:index' %}" />
+    </form>
+
+{% endblock content %}
+
+{% comment %}
+
+At [3] we load the bootstrap4 template tags into this template. At [4]
+we define the page_header block, which tells the user what the page is for.
+Notice that we’ve removed the {% if form.errors %} block from the template;
+django-bootstrap4 manages form errors automatically.
+
+At [9] we add a class="form" attribute, and then we use the template tag
+{% bootstrap_form %} when we display the form [11]; this replaces the {{ form
+.as_p }} tag we were using in Chapter 19. The {% booststrap_form %} template
+tag inserts Bootstrap style rules into the form’s individual elements as the
+form is rendered. At [12] we open a bootstrap4 template tag {% buttons %} ,
+which adds Bootstrap styling to buttons.
+
+
+The following was removed during bootstrap stylization process:
+
+{% block content %}
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'users:login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button name="submit">Log In</button>
+        <input type="hidden" name="next"
+            value="{% url 'learning_logs:index' %}" />
+    </form>
+{% endblock content %}
+
+This template extends base.html to ensure that the login page will have
+the same look and feel as the rest of the site. Note that a template in one
+app can inherit from a template in another app.
+
+If the form’s errors attribute is set, we display an error message [5], report-
+ing that the username and password combination don’t match anything
+stored in the database.
+
+We want the login view to process the form, so we set the action argument
+as the URL of the login page [8]. The login view sends a form to the template,
+and it’s up to us to display the form [10] and add a submit button [12]. At [13]
+we include a hidden form element, 'next'; the value argument tells Django
+where to redirect the user after they’ve logged in successfully. In this case,
+we send the user back to the home page.
+{% endcomment %}
