@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -29,7 +28,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     # My apps
     'learning_logs',
@@ -131,10 +129,6 @@ STATIC_URL = '/static/'
 # My settings
 LOGIN_URL = 'users:login'
 
-"""
-[129] Along with views.py @login_required above topics(), this tells
-app where to redirect user if they try to view topic without logging in.
-"""
 
 # Heroku settings
 import django_on_heroku
