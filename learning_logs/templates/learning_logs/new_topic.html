@@ -17,33 +17,3 @@
             value="{% url 'learning_logs:index' %}" />
     </form>
 {% endblock content %}
-
-{% comment %}
-Pre-bootstrap:
-
-    <p>Add a new topic:</p>
-
-    <form action="{% url 'learning_logs:new_topic' %}" method='post'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">Add</button>
-    </form>
-
-This template extends base.html, so it has the same base structure as
-the rest of the pages in Learning Log. At [line 6] we define an HTML form.
-The action argument tells the browser where to send the data submitted
-in the form; in this case, we send it back to the view function new_topic() .
-The method argument tells the browser to submit the data as a POST
-request.
-
-Django uses the template tag {% csrf_token %} [line 7] to prevent attackers
-from using the form to gain unauthorized access to the server (this kind
-of attack is called a cross-site request forgery). At [line 8] we display the form; here
-you see how simple Django can make certain tasks, such as displaying a
-form. We only need to include the template variable {{ form.as_p }} for
-Django to create all the fields necessary to display the form automatically.
-The as_p modifier tells Django to render all the form elements in para-
-graph format, as a simple way to display the form neatly.
-
-Django doesn’t create a submit button for forms, so we define one at [line 9].
-{% endcomment %}

@@ -13,70 +13,16 @@
     </h3>
     <ul class="list-group mb-4">
         {% for topic in topics %}
-            <li class="list-group-item"><h3>
-                <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
-            </h3></li>
-        {% empty %}
-            <li class="list-group-item"><h3>No topics have been added yet.</h3></li>
-        {% endfor %}
-    </ul>
-{% endblock content %}
-
-{% comment %}
-We don’t need the {% load bootstrap4 %} tag, because we’re not using any
-custom bootstrap4 template tags in this file. We move the heading Topics
-into the page_header block and give it a header styling instead of using the
-simple paragraph tag [2]. We style each topic as an <h3> element to make
-them a little larger on the page [9] and do the same for the link to add a
-new topic [17].
-
-    NOTE: replaced textbook's Add Topic link w/button
-    <h3><a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a></h3>
-
-The following was replaced during style process via bootstrap:
-
-{% block content %}
-    <p>Topics</p>
-    <ul>
-        {% for topic in topics %}
-            <li>
-                <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+            <li class="list-group-item">
+                <h3>
+                    <a href="{% url 'learning_logs:topic' topic.id %}">
+                        {{ topic }}</a>
+                </h3>
             </li>
         {% empty %}
-            <li>No topics have been added yet.</li>
+            <li class="list-group-item">
+                <h3>No topics have been added yet.</h3>
+            </li>
         {% endfor %}
     </ul>
-
-    <a href="{% url 'learning_logs:new_topic' %}">Add a New Topic</a>
-
 {% endblock content %}
-
-Line 7. We have another template tag equivalent to a for loop, which loops
-through the list topics from the context dictionary. The code used in tem-
-plates differs from Python in some important ways. Python uses indentation
-to indicate which lines of a for statement are part of a loop. In a template,
-every for loop needs an explicit {% endfor %} tag indicating where the end of
-the loop occurs.
-
-Inside the loop, we want to turn each topic into an item in the bulleted
-list. To print a variable in a template, wrap the variable name in double
-braces. The braces won’t appear on the page; they just indicate to Django
-that we’re using a template variable.
-
-Line 8. The code {{ topic }} will be replaced by the value of topic on each pass
-through the loop. NOTE: this was replaced: <li>{{ topic }}</li>, to link topic.html
-Line 8 replacement: <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
---We use the URL template tag to generate the proper link, based on
-the URL pattern in learning_logs with the name 'topic' . This URL pattern
-requires a topic_id argument, so we add the attribute topic.id to the URL
-template tag. Now each topic in the list
-
-Line 10. We use the {% empty %} template tag, which tells Django what to do
-if there are no items in the list. In this case, we print a message informing
-the user that no topics have been added yet.
-
-Line 12. The last two lines close out the for loop and then close out the bulleted list
-
-Line 16. Add "New Topic" button to redirect to new topic form.
-
-{% endcomment %}

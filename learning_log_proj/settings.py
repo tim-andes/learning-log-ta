@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import django_on_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -131,7 +132,6 @@ LOGIN_URL = 'users:login'
 
 
 # Heroku settings
-import django_on_heroku
 django_on_heroku.settings(locals())
 
 if os.environ.get('DEBUG') == 'TRUE':

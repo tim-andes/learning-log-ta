@@ -19,18 +19,3 @@
             value="{% url 'learning_logs:index' %}" />
     </form>
 {% endblock content %}
-
-{% comment %}
-
-Pre-bootstrap:
-    <form action="{% url 'learning_logs:edit_entry' entry.id %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">Save Changes</button>
-    </form>
-At [line 8] the action argument sends the form back to the edit_entry() func-
-tion for processing. We include the entry ID as an argument in the {% url %}
-tag, so the view function can modify the correct entry object. We label the
-submit button as Save changes to remind the user they’re saving edits, not
-creating a new entry [line 11].
-{% endcomment %}
