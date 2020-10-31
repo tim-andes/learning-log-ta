@@ -5,3 +5,4 @@ This repository assumes you have a grasp of the basic funcionality of Django and
 
 TO DO
 - [ ] Fill out readme. Add screen shot, etc.
+- [ ] Add MIT license
